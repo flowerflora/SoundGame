@@ -23,24 +23,29 @@ struct PlayMode : Mode {
 	struct Button {
 		uint8_t downs = 0;
 		uint8_t pressed = 0;
-	} left, right, down, up;
+	} left, right, down, up, jump, yell;
 
 	//local copy of the game scene (so code can change it during gameplay):
 	Scene scene;
 
-	//hexapod leg to wobble:
-	Scene::Transform *hip = nullptr;
-	Scene::Transform *upper_leg = nullptr;
-	Scene::Transform *lower_leg = nullptr;
-	glm::quat hip_base_rotation;
-	glm::quat upper_leg_base_rotation;
-	glm::quat lower_leg_base_rotation;
+	//models:
+	Scene::Transform *sheep = nullptr;
+	Scene::Transform *apple = nullptr;
+	Scene::Transform *sheep_head = nullptr;
+	glm::quat sheep_base_rotation;
+	glm::quat apple_base_rotation;
+	glm::quat sheep_head_base_rotation;
+	glm::vec3 veclocity = glm::vec3(0.0f,0,0);
+	float stamana = 0;
 	float wobble = 0.0f;
+	float cooldown = 0.0f;
+	float applechange = 10.0f;
+	int points=0;
 
-	glm::vec3 get_leg_tip_position();
+	glm::vec3 get_sheep_head_position();
 
 	//music coming from the tip of the leg (as a demonstration):
-	std::shared_ptr< Sound::PlayingSample > leg_tip_loop;
+	std::shared_ptr< Sound::PlayingSample > sheepnoise;
 	
 	//camera:
 	Scene::Camera *camera = nullptr;
